@@ -1,5 +1,5 @@
-import { fonts } from './foundations/fonts'
-const { fontSizes, fontWeights, lineHeights } = fonts
+import { fonts } from './foundations/fonts';
+const { fontSizes, fontWeights, lineHeights } = fonts;
 
 const textStyles = {
   display1: {
@@ -43,8 +43,8 @@ const textStyles = {
     fontWeight: fontWeights['semibold'],
     lineHeight: `calc(${fontSizes['sm']} + ${lineHeights['none']})`
   }
-}
+};
 
-export type TextStyles = typeof textStyles
+export type TextStyles = typeof textStyles;
 
-export default textStyles
+export default textStyles;

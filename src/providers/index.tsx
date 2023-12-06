@@ -1,8 +1,16 @@
-import React from 'react'
-import ChakraProvider from './chakra'
+import React from 'react';
+import ChakraProvider from './ChakraProvider';
+import ReactQueryProvider from './ReactQueryProvider';
+import ReduxProvider from './ReduxProvider';
 
 const RootProviders = ({ children }: { children: React.ReactNode }) => {
-  return <ChakraProvider>{children}</ChakraProvider>
-}
+  return (
+    <ReactQueryProvider>
+      <ReduxProvider>
+        <ChakraProvider>{children}</ChakraProvider>
+      </ReduxProvider>
+    </ReactQueryProvider>
+  );
+};
 
-export default RootProviders
+export default RootProviders;

@@ -1,4 +1,4 @@
-import { ComponentStyleConfig } from '@chakra-ui/react'
+import { ComponentStyleConfig } from '@chakra-ui/react';
 
 export const Container: ComponentStyleConfig = {
   baseStyle: {
@@ -7,4 +7,4 @@ export const Container: ComponentStyleConfig = {
   sizes: {},
   variants: {},
   defaultProps: {}
-}
+};

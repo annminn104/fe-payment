@@ -1,10 +1,10 @@
-import { ChakraTheme, DeepPartial, Theme } from '@chakra-ui/react'
-import '@fontsource/inter'
+import { ChakraTheme, DeepPartial, Theme } from '@chakra-ui/react';
+import '@fontsource/inter';
 
 const overrideFonts: DeepPartial<Theme['fonts']> = {
   body: "'Inter' sans-serif",
   heading: "'Inter' sans-serif"
-}
+};
 
 const overrideFontSizes: DeepPartial<Theme['fontSizes']> = {
   xs: '0.75rem',
@@ -20,7 +20,7 @@ const overrideFontSizes: DeepPartial<Theme['fontSizes']> = {
   '7xl': '4.5rem',
   '8xl': '6rem',
   '9xl': '8rem'
-}
+};
 
 const overrideFontWeights: DeepPartial<Theme['fontWeights']> = {
   hairline: 100,
@@ -32,7 +32,7 @@ const overrideFontWeights: DeepPartial<Theme['fontWeights']> = {
   bold: 700,
   extrabold: 800,
   black: 900
-}
+};
 
 const overrideLineHeights: DeepPartial<Theme['lineHeights']> = {
   normal: 'normal',
@@ -50,7 +50,7 @@ const overrideLineHeights: DeepPartial<Theme['lineHeights']> = {
   '8': '2rem',
   '9': '2.25rem',
   '10': '2.5rem'
-}
+};
 
 const overrideLetterSpacings: DeepPartial<Theme['letterSpacings']> = {
   tighter: '-0.05em',
@@ -59,7 +59,7 @@ const overrideLetterSpacings: DeepPartial<Theme['letterSpacings']> = {
   wide: '0.025em',
   wider: '0.05em',
   widest: '0.1em'
-}
+};
 
 export const fonts: Pick<ChakraTheme, 'fonts' | 'fontSizes' | 'fontWeights' | 'lineHeights' | 'letterSpacings'> = {
   fonts: overrideFonts,
@@ -67,4 +67,4 @@ export const fonts: Pick<ChakraTheme, 'fonts' | 'fontSizes' | 'fontWeights' | 'l
   fontWeights: overrideFontWeights,
   lineHeights: overrideLineHeights,
   letterSpacings: overrideLetterSpacings
-}
+};

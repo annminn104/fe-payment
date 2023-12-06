@@ -1,4 +1,4 @@
-import { DeepPartial, Theme } from '@chakra-ui/react'
+import { DeepPartial, Theme } from '@chakra-ui/react';
 
 export const shadows: DeepPartial<Theme['shadows']> = {
   xs: '0 0 0 1px rgba(0, 0, 0, 0.05)',
@@ -12,4 +12,4 @@ export const shadows: DeepPartial<Theme['shadows']> = {
   inner: 'inset 0 2px 4px 0 rgba(0,0,0,0.06)',
   none: 'none',
   'dark-lg': 'rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 5px 10px, rgba(0, 0, 0, 0.4) 0px 15px 40px'
-}
+};

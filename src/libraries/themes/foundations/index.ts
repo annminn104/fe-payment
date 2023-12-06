@@ -1,15 +1,15 @@
-import { DeepPartial, Theme } from '@chakra-ui/react'
-import { breakpoints } from './breakpoints'
-import { colors } from './colors'
-import { fonts } from './fonts'
-import { space } from './space'
-import { sizes } from './sizes'
-import { radius } from './radius'
-import { zIndices } from './z-index'
-import { shadows } from './shadows'
-import { transition } from './transition'
-import { blur } from './blur'
-import { borders } from './borders'
+import { DeepPartial, Theme } from '@chakra-ui/react';
+import { breakpoints } from './breakpoints';
+import { colors } from './colors';
+import { fonts } from './fonts';
+import { space } from './space';
+import { sizes } from './sizes';
+import { radius } from './radius';
+import { zIndices } from './z-index';
+import { shadows } from './shadows';
+import { transition } from './transition';
+import { blur } from './blur';
+import { borders } from './borders';
 
 export const foundations: DeepPartial<
   Pick<
@@ -42,4 +42,4 @@ export const foundations: DeepPartial<
   shadows,
   blur,
   borders
-}
+};

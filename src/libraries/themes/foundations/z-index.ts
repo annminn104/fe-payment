@@ -1,4 +1,4 @@
-import { DeepPartial, Theme } from '@chakra-ui/react'
+import { DeepPartial, Theme } from '@chakra-ui/react';
 
 export const zIndices: DeepPartial<Theme['zIndices']> = {
   hide: -1,
@@ -14,4 +14,4 @@ export const zIndices: DeepPartial<Theme['zIndices']> = {
   skipLink: 1600,
   toast: 1700,
   tooltip: 1800
-}
+};

@@ -1,5 +1,5 @@
-import { DeepPartial, Theme } from '@chakra-ui/react'
-import { space } from './space'
+import { DeepPartial, Theme } from '@chakra-ui/react';
+import { space } from './space';
 
 export const sizes: DeepPartial<Theme['sizes']> = {
   ...space,
@@ -26,4 +26,4 @@ export const sizes: DeepPartial<Theme['sizes']> = {
     lg: '1024px',
     xl: '1280px'
   }
-}
+};

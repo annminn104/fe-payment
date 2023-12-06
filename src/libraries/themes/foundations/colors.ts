@@ -1,10 +1,10 @@
-import { DeepPartial, Theme } from '@chakra-ui/react'
+import { DeepPartial, Theme } from '@chakra-ui/react';
 
 const baseChakraColors: DeepPartial<Theme['colors']> = {
   transparent: 'transparent',
   black: '#000000',
   white: '#ffffff'
-}
+};
 
 const whiteAlpha: DeepPartial<Theme['colors']['whiteAlpha']> = {
   50: 'rgba(255, 255, 255, 0.04)',
@@ -17,7 +17,7 @@ const whiteAlpha: DeepPartial<Theme['colors']['whiteAlpha']> = {
   700: 'rgba(255, 255, 255, 0.64)',
   800: 'rgba(255, 255, 255, 0.80)',
   900: 'rgba(255, 255, 255, 0.92)'
-}
+};
 
 const blackAlpha: DeepPartial<Theme['colors']['blackAlpha']> = {
   50: 'rgba(0, 0, 0, 0.04)',
@@ -30,7 +30,7 @@ const blackAlpha: DeepPartial<Theme['colors']['blackAlpha']> = {
   700: 'rgba(0, 0, 0, 0.64)',
   800: 'rgba(0, 0, 0, 0.80)',
   900: 'rgba(0, 0, 0, 0.92)'
-}
+};
 
 const gray: DeepPartial<Theme['colors']['gray']> = {
   50: '#F7FAFC',
@@ -43,7 +43,7 @@ const gray: DeepPartial<Theme['colors']['gray']> = {
   700: '#2D3748',
   800: '#1A202C',
   900: '#171923'
-}
+};
 
 const red: DeepPartial<Theme['colors']['red']> = {
   50: '#FFF5F5',
@@ -56,7 +56,7 @@ const red: DeepPartial<Theme['colors']['red']> = {
   700: '#9B2C2C',
   800: '#822727',
   900: '#63171B'
-}
+};
 
 const orange: DeepPartial<Theme['colors']['orange']> = {
   50: '#FFFAF0',
@@ -69,7 +69,7 @@ const orange: DeepPartial<Theme['colors']['orange']> = {
   700: '#9C4221',
   800: '#7B341E',
   900: '#652B19'
-}
+};
 
 const yellow: DeepPartial<Theme['colors']['yellow']> = {
   50: '#FFFFF0',
@@ -82,7 +82,7 @@ const yellow: DeepPartial<Theme['colors']['yellow']> = {
   700: '#975A16',
   800: '#744210',
   900: '#5F370E'
-}
+};
 
 const green: DeepPartial<Theme['colors']['green']> = {
   50: '#F0FFF4',
@@ -95,7 +95,7 @@ const green: DeepPartial<Theme['colors']['green']> = {
   700: '#276749',
   800: '#22543D',
   900: '#1C4532'
-}
+};
 
 const teal: DeepPartial<Theme['colors']['teal']> = {
   50: '#E6FFFA',
@@ -108,7 +108,7 @@ const teal: DeepPartial<Theme['colors']['teal']> = {
   700: '#285E61',
   800: '#234E52',
   900: '#1D4044'
-}
+};
 
 const blue: DeepPartial<Theme['colors']['blue']> = {
   50: '#EBF8FF',
@@ -121,7 +121,7 @@ const blue: DeepPartial<Theme['colors']['blue']> = {
   700: '#2C5282',
   800: '#2A4365',
   900: '#1A365D'
-}
+};
 
 const cyan: DeepPartial<Theme['colors']['cyan']> = {
   50: '#EDFDFD',
@@ -134,7 +134,7 @@ const cyan: DeepPartial<Theme['colors']['cyan']> = {
   700: '#0987A0',
   800: '#086F83',
   900: '#065666'
-}
+};
 
 const purple: DeepPartial<Theme['colors']['purple']> = {
   50: '#FAF5FF',
@@ -147,7 +147,7 @@ const purple: DeepPartial<Theme['colors']['purple']> = {
   700: '#553C9A',
   800: '#44337A',
   900: '#322659'
-}
+};
 
 const pink: DeepPartial<Theme['colors']['pink']> = {
   50: '#FFF5F7',
@@ -160,7 +160,7 @@ const pink: DeepPartial<Theme['colors']['pink']> = {
   700: '#97266D',
   800: '#702459',
   900: '#521B41'
-}
+};
 
 const linkedin: DeepPartial<Theme['colors']['linkedin']> = {
   50: '',
@@ -173,7 +173,7 @@ const linkedin: DeepPartial<Theme['colors']['linkedin']> = {
   700: '',
   800: '',
   900: ''
-}
+};
 
 const facebook: DeepPartial<Theme['colors']['facebook']> = {
   50: '',
@@ -186,7 +186,7 @@ const facebook: DeepPartial<Theme['colors']['facebook']> = {
   700: '',
   800: '',
   900: ''
-}
+};
 
 const messenger: DeepPartial<Theme['colors']['messenger']> = {
   50: '',
@@ -199,7 +199,7 @@ const messenger: DeepPartial<Theme['colors']['messenger']> = {
   700: '',
   800: '',
   900: ''
-}
+};
 
 const whatsapp: DeepPartial<Theme['colors']['whatsapp']> = {
   50: '',
@@ -212,7 +212,7 @@ const whatsapp: DeepPartial<Theme['colors']['whatsapp']> = {
   700: '',
   800: '',
   900: ''
-}
+};
 
 const twitter: DeepPartial<Theme['colors']['twitter']> = {
   50: '',
@@ -225,7 +225,7 @@ const twitter: DeepPartial<Theme['colors']['twitter']> = {
   700: '',
   800: '',
   900: ''
-}
+};
 
 const telegram: DeepPartial<Theme['colors']['telegram']> = {
   50: '',
@@ -238,7 +238,7 @@ const telegram: DeepPartial<Theme['colors']['telegram']> = {
   700: '',
   800: '',
   900: ''
-}
+};
 
 export const colors: DeepPartial<Theme['colors']> = {
   ...baseChakraColors,
@@ -260,4 +260,4 @@ export const colors: DeepPartial<Theme['colors']> = {
   whatsapp,
   twitter,
   telegram
-}
+};

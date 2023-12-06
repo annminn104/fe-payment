@@ -1,4 +1,4 @@
-import { DeepPartial, Theme } from '@chakra-ui/react'
+import { DeepPartial, Theme } from '@chakra-ui/react';
 
 export const radius: DeepPartial<Theme['radii']> = {
   none: '0',
@@ -10,4 +10,4 @@ export const radius: DeepPartial<Theme['radii']> = {
   '2xl': '1rem',
   '3xl': '1.5rem',
   full: '9999px'
-}
+};

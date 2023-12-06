@@ -1,6 +1,6 @@
-import { DeepPartial, Theme } from "@chakra-ui/react";
+import { DeepPartial, Theme } from '@chakra-ui/react';
 
-export const blur: DeepPartial<Theme['blur']>  = {
+export const blur: DeepPartial<Theme['blur']> = {
   none: 0,
   sm: '4px',
   base: '8px',
@@ -9,4 +9,4 @@ export const blur: DeepPartial<Theme['blur']>  = {
   xl: '24px',
   '2xl': '40px',
   '3xl': '64px'
-}
+};
