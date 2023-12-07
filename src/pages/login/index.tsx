@@ -12,12 +12,7 @@ const LoginPage = () => {
     }
   });
 
-  return (
-    <div>
-      <h3>Login page</h3>
-      <AuthForm onLogin={onLoginMutate} />
-    </div>
-  );
+  return <AuthForm onLogin={onLoginMutate} />;
 };
 
 export default LoginPage;

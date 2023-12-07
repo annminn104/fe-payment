@@ -1,26 +1,39 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export const useLocalStorage = (keyName: string, defaultValue: string) => {
-  const [storedValue, setStoredValue] = useState(() => {
-    try {
-      const value = window.localStorage.getItem(keyName);
-      if (value) {
-        return JSON.parse(value);
-      } else {
-        window.localStorage.setItem(keyName, JSON.stringify(defaultValue));
-        return defaultValue;
-      }
-    } catch (err) {
-      return defaultValue;
-    }
+import { ExistHelpers } from '@/common/helpers';
+
+export default function useLocalStorage<T>(key: string, defaultValue: T) {
+  const storageAvailable = ExistHelpers.localStorageAvailable();
+
+  const [value, setValue] = useState(() => {
+    const storedValue = storageAvailable ? localStorage.getItem(key) : null;
+
+    return storedValue === null ? defaultValue : JSON.parse(storedValue);
   });
-  const setValue = (newValue: string) => {
-    try {
-      window.localStorage.setItem(keyName, JSON.stringify(newValue));
-    } catch (err) {
-      console.log(err);
-    }
-    setStoredValue(newValue);
+
+  useEffect(() => {
+    const listener = (e: StorageEvent) => {
+      if (e.storageArea === localStorage && e.key === key) {
+        setValue(e.newValue ? JSON.parse(e.newValue) : e.newValue);
+      }
+    };
+
+    window.addEventListener('storage', listener);
+    return () => {
+      window.removeEventListener('storage', listener);
+    };
+  }, [key, defaultValue]);
+
+  const setValueInLocalStorage = (newValue: T) => {
+    setValue((currentValue: T) => {
+      const result = typeof newValue === 'function' ? newValue(currentValue) : newValue;
+      if (storageAvailable) {
+        localStorage.setItem(key, JSON.stringify(result));
+      }
+
+      return result;
+    });
   };
-  return [storedValue, setValue];
-};
+
+  return [value, setValueInLocalStorage];
+}

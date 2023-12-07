@@ -1,216 +1,141 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useTable, usePagination } from 'react-table';
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Flex,
-  IconButton,
-  Text,
-  Tooltip,
-  Select,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper
-} from '@chakra-ui/react';
-import { ArrowRightIcon, ArrowLeftIcon, ChevronRightIcon, ChevronLeftIcon } from '@chakra-ui/icons';
-import React from 'react';
-import { MockPaymentHistory } from '@/common/mocks';
+import * as React from 'react';
+import { Box, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, Checkbox } from '@mui/material';
+import { PaymentHistoryMockRows, IDataMock, PaymentHistoryMockHeadCell } from '@/common/mocks';
+import { TableHelpers } from '@/common/helpers';
+import { OrderType } from '@/common/interfaces';
+import PaymentHistoryTableHead from '@/components/molecules/PaymentHistoryTableHead';
+import PaymentHistoryTableToolbar from '@/components/molecules/PaymentHistoryTableToolbar';
 
 const PaymentHistoryTable = () => {
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: 'Name',
-        columns: [
-          {
-            Header: 'First Name',
-            accessor: 'firstName'
-          },
-          {
-            Header: 'Last Name',
-            accessor: 'lastName'
-          }
-        ]
-      },
-      {
-        Header: 'Info',
-        columns: [
-          {
-            Header: 'Age',
-            accessor: 'age'
-          },
-          {
-            Header: 'Visits',
-            accessor: 'visits'
-          },
-          {
-            Header: 'Status',
-            accessor: 'status'
-          },
-          {
-            Header: 'Profile Progress',
-            accessor: 'progress'
-          }
-        ]
-      }
-    ],
-    []
-  );
+  const [order, setOrder] = React.useState<OrderType>('asc');
+  const [orderBy, setOrderBy] = React.useState<keyof IDataMock>('id');
+  const [selected, setSelected] = React.useState<readonly number[]>([]);
+  const [page, setPage] = React.useState(0);
+  const [dense, setDense] = React.useState(false);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const data = React.useMemo(() => MockPaymentHistory(100000), []);
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof IDataMock) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
+  };
 
-  return <CustomTable columns={columns} data={data} />;
-};
-export default PaymentHistoryTable;
+  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      const newSelected = PaymentHistoryMockRows.map((n) => n.id);
+      setSelected(newSelected);
+      return;
+    }
+    setSelected([]);
+  };
 
-const CustomTable = ({ columns, data }: { columns: any; data: any }) => {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    state: { pageIndex, pageSize }
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 2 }
-    },
-    usePagination
+  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected: readonly number[] = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
+  };
+
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setDense(event.target.checked);
+  };
+
+  const isSelected = (id: number) => selected.indexOf(id) !== -1;
+
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - PaymentHistoryMockRows.length) : 0;
+
+  const visibleRows = React.useMemo(
+    () =>
+      TableHelpers.stableSort(PaymentHistoryMockRows, TableHelpers.getComparator(order, orderBy)).slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+      ),
+    [order, orderBy, page, rowsPerPage]
   );
 
   return (
-    <>
-      <pre>
-        <code>
-          {JSON.stringify(
-            {
-              pageIndex,
-              pageSize,
-              pageCount,
-              canNextPage,
-              canPreviousPage
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
-      <Table {...getTableProps()}>
-        <Thead>
-          {headerGroups.map((headerGroup: any) => (
-            <Tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column: any) => (
-                <Th {...column.getHeaderProps()}>{column.render('Header')}</Th>
-              ))}
-            </Tr>
-          ))}
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {page.map((row: any) => {
-            prepareRow(row);
-            return (
-              <Tr {...row.getRowProps()}>
-                {row.cells.map((cell: any) => {
-                  return <Td {...cell.getCellProps()}>{cell.render('Cell')}</Td>;
-                })}
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-
-      <Flex justifyContent='space-between' m={4} alignItems='center'>
-        <Flex>
-          <Tooltip label='First Page'>
-            <IconButton
-              onClick={() => gotoPage(0)}
-              isDisabled={!canPreviousPage}
-              icon={<ArrowLeftIcon h={3} w={3} />}
-              mr={4}
-              aria-label={'First Page'}
+    <Box sx={{ width: '100%' }}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
+        <PaymentHistoryTableToolbar numSelected={selected.length} isDense={dense} onDense={handleChangeDense} />
+        <TableContainer>
+          <Table sx={{ minWidth: 750 }} aria-labelledby='tableTitle' size={dense ? 'small' : 'medium'}>
+            <PaymentHistoryTableHead
+              numSelected={selected.length}
+              order={order}
+              orderBy={orderBy}
+              onSelectAllClick={handleSelectAllClick}
+              onRequestSort={handleRequestSort}
+              rowCount={PaymentHistoryMockRows.length}
+              headCells={PaymentHistoryMockHeadCell}
             />
-          </Tooltip>
-          <Tooltip label='Previous Page'>
-            <IconButton onClick={previousPage} isDisabled={!canPreviousPage} icon={<ChevronLeftIcon h={6} w={6} />} aria-label={'Previous Page'} />
-          </Tooltip>
-        </Flex>
+            <TableBody>
+              {visibleRows.map((row, index) => {
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-        <Flex alignItems='center'>
-          <Text flexShrink='0' mr={8}>
-            Page{' '}
-            <Text fontWeight='bold' as='span'>
-              {pageIndex + 1}
-            </Text>{' '}
-            of{' '}
-            <Text fontWeight='bold' as='span'>
-              {pageOptions.length}
-            </Text>
-          </Text>
-          <Text flexShrink='0'>Go to page:</Text>{' '}
-          <NumberInput
-            ml={2}
-            mr={8}
-            w={28}
-            min={1}
-            max={pageOptions.length}
-            onChange={(value: any) => {
-              const page = value ? value - 1 : 0;
-              gotoPage(page);
-            }}
-            defaultValue={pageIndex + 1}
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-          <Select
-            w={32}
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-            }}
-          >
-            {[10, 20, 30, 40, 50].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </Select>
-        </Flex>
-
-        <Flex>
-          <Tooltip label='Next Page'>
-            <IconButton onClick={nextPage} isDisabled={!canNextPage} icon={<ChevronRightIcon h={6} w={6} />} aria-label={''} />
-          </Tooltip>
-          <Tooltip label='Last Page'>
-            <IconButton
-              onClick={() => gotoPage(pageCount - 1)}
-              isDisabled={!canNextPage}
-              icon={<ArrowRightIcon h={3} w={3} />}
-              ml={4}
-              aria-label={''}
-            />
-          </Tooltip>
-        </Flex>
-      </Flex>
-    </>
+                return (
+                  <TableRow
+                    hover
+                    onClick={(event) => handleClick(event, row.id)}
+                    role='checkbox'
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={row.id}
+                    selected={isItemSelected}
+                    sx={{ cursor: 'pointer' }}
+                  >
+                    <TableCell padding='checkbox'>
+                      <Checkbox color='primary' checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
+                    </TableCell>
+                    <TableCell component='th' id={labelId} scope='row' padding='none'>
+                      {row.fullName}
+                    </TableCell>
+                    <TableCell align='right'>{row.username}</TableCell>
+                    <TableCell align='right'>{row.money}</TableCell>
+                    <TableCell align='right'>{row.createAt}</TableCell>
+                    <TableCell align='right'>{row.protein}</TableCell>
+                  </TableRow>
+                );
+              })}
+              {emptyRows > 0 && (
+                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component='div'
+          count={PaymentHistoryMockRows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </Box>
   );
 };
+
+export default PaymentHistoryTable;

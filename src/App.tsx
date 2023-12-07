@@ -6,7 +6,6 @@ import AuthRoutes from './routes/auth';
 function App() {
   return (
     <RootProviders>
-      <h1>Browser Router</h1>
       <BrowserRouter>
         <Routes>
           {DashboardRoutes}

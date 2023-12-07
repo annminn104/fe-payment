@@ -7,11 +7,10 @@ interface IAuthLayoutProps {
 
 const AuthLayout: React.FC<IAuthLayoutProps> = ({ children }) => {
   return (
-    <div>
-      <h2>Auth Layout</h2>
+    <React.Fragment>
       {children}
       <Outlet />
-    </div>
+    </React.Fragment>
   );
 };
 

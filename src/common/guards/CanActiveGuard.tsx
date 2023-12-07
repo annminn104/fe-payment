@@ -21,7 +21,7 @@ const CanActiveGuard: React.FC<ICanActiveGuardProps> = ({ component }) => {
       dispatch(setProfile(res.data));
     },
     onError: () => {
-      navigate(`/auth/login`);
+      // navigate(`/auth/login`);
     }
   });
 

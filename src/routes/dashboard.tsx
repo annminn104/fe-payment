@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 import { Route } from 'react-router-dom';
 
 const DashboardLayout = React.lazy(() => import('@/components/templates/DashboardLayout'));
-const DashboardPage = React.lazy(() => import('@/pages/dashboard'));
+const PaymentHistoryPage = React.lazy(() => import('@/pages/payment-history'));
 
 const DashboardRoutes = [
   <Route
@@ -20,14 +20,14 @@ const DashboardRoutes = [
     }
   >
     <Route
-      key='Dashboard page'
+      key='Payment history page'
       path=''
       element={
         <Suspense>
-          <DashboardPage />
+          <PaymentHistoryPage />
         </Suspense>
       }
-    ></Route>
+    />
   </Route>
 ];
 
