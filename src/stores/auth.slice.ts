@@ -1,8 +1,8 @@
-import { User } from '@/common/models';
+import { IUserResponse } from '@/common/interfaces';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface IInitialState {
-  profile: User | null;
+  profile: IUserResponse | null;
 }
 
 const initialState: IInitialState = {

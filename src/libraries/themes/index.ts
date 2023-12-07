@@ -8,7 +8,8 @@ const customTheme = extendTheme({
   ...foundations,
   components,
   config,
-  textStyles
+  textStyles,
+
 });
 
 export default customTheme;

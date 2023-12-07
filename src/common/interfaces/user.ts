@@ -1,14 +1,12 @@
-import { UserRoleEnum } from '../enums';
-
 export interface IUserResponse {
-  id: string;
+  isAdmin: boolean;
+  deletedAt: Date | null;
+  fullName: string;
   username: string;
-  email: string;
-  phone: string;
-  firstName: string;
-  lastName: string;
-  doB: Date | string;
-  role: UserRoleEnum;
+  tokenExpiredDate: string;
+  id: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
 }
 
 export type IUser = IUserResponse;

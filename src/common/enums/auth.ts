@@ -2,6 +2,6 @@ export enum AuthEndpointEnum {
   Login = '/auth/login',
   Register = '/auth/register',
   Logout = '/auth/logout',
-  Profile = '/auth/profile',
+  Profile = '/user/profile',
   RefreshToken = '/auth/refresh-token'
 }

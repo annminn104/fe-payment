@@ -2,9 +2,8 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { RequestInterceptorReject, RequestInterceptorResolve } from './request.interceptor';
 import { ResponseInterceptorFulfilled } from './response.interceptor';
-import { AuthEndpointEnum, ContentTypeEnum, HttpStatusCodeEnum } from '@/common/enums';
+import { ContentTypeEnum, HttpStatusCodeEnum } from '@/common/enums';
 import { environments } from '@/common/environments';
-import { authService } from '../auth';
 import { AxiosUtils } from '@/common/utils';
 import { IErrorResponse, ITokenResponse } from '@/common/interfaces';
 
@@ -29,20 +28,20 @@ export class ApiService {
         console.log(message);
         // toast.error(message);
       } else if (AxiosUtils.isAxiosUnauthorizedError<IErrorResponse<{ name: string; message: string }>>(error)) {
-        const config = error.response?.config || { headers: {}, url: '' };
-        const { url } = config;
-        if (AxiosUtils.isAxiosExpiredTokenError(error) && url !== AuthEndpointEnum.RefreshToken) {
-          this.refreshTokenRequest = this.refreshTokenRequest
-            ? this.refreshTokenRequest
-            : authService.refreshToken().finally(() => {
-                setTimeout(() => {
-                  this.refreshTokenRequest = null;
-                }, 10000);
-              });
-          return this.refreshTokenRequest.then(() => {
-            return this.instance({ ...config, headers: { ...config.headers, Authorization: authService.getAccessToken() } });
-          });
-        }
+        // const config = error.response?.config || { headers: {}, url: '' };
+        // const { url } = config;
+        // if (AxiosUtils.isAxiosExpiredTokenError(error) && url !== AuthEndpointEnum.RefreshToken) {
+        //   this.refreshTokenRequest = this.refreshTokenRequest
+        //     ? this.refreshTokenRequest
+        //     : authService.refreshToken().finally(() => {
+        //         setTimeout(() => {
+        //           this.refreshTokenRequest = null;
+        //         }, 10000);
+        //       });
+        //   return this.refreshTokenRequest.then(() => {
+        //     return this.instance({ ...config, headers: { ...config.headers, Authorization: authService.getAccessToken() } });
+        //   });
+        // }
       }
     });
   }

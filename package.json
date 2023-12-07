@@ -21,14 +21,18 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@chakra-ui/icons": "^2.1.1",
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
+    "@fontsource/inter": "^5.0.16",
     "@hookform/resolvers": "^3.3.2",
     "@reduxjs/toolkit": "^2.0.1",
-    "@tanstack/react-query": "^5.12.2",
+    "@tanstack/react-query": "^4.29.19",
+    "@tanstack/react-query-devtools": "^4.29.19",
     "@types/node": "^20.10.3",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@types/react-table": "^7.7.18",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
@@ -41,12 +45,16 @@
     "husky": "^8.0.3",
     "hygen": "^6.2.11",
     "moment": "^2.29.4",
+    "namor": "^1.1.2",
     "prettier": "^3.1.0",
     "react-hook-form": "^7.48.2",
+    "react-icons": "^4.12.0",
     "react-redux": "^9.0.2",
     "react-router-dom": "^6.20.1",
+    "react-table": "^7.8.0",
     "sass": "^1.69.5",
     "typescript": "^5.2.2",
-    "vite": "^5.0.0"
+    "vite": "^5.0.0",
+    "yup": "^1.3.2"
   }
 }

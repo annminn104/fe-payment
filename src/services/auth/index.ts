@@ -1,5 +1,5 @@
 import { StorageEnum, AuthEndpointEnum } from '@/common/enums';
-import { ITokenResponse, IUserResponse } from '@/common/interfaces';
+import { IAuthLoginRequest, ISuccessResponse, ITokenResponse, IUserResponse } from '@/common/interfaces';
 import { CookieUtils } from '@/common/utils';
 import { AxiosPromise } from 'axios';
 import ApiService from '../api';
@@ -8,14 +8,14 @@ export const authService = {
   isLogged: false,
   refreshTokenRequest: null as Promise<string> | AxiosPromise | Promise<ITokenResponse> | null,
 
-  login: async (data: unknown) => {
+  login: async (data: IAuthLoginRequest) => {
     try {
       const res = await ApiService.post<ITokenResponse>(AuthEndpointEnum.Login, data);
       authService.isLogged = true;
       if (res) {
-        authService.setToken(res.data);
+        authService.setAccessToken(res.data);
       }
-      return res;
+      return res.data;
     } catch (error) {
       authService.isLogged = false;
       return Promise.reject(error);
@@ -27,9 +27,9 @@ export const authService = {
     return res.data;
   },
 
-  profile: async (): Promise<IUserResponse> => {
+  profile: async (): Promise<ISuccessResponse<IUserResponse>> => {
     try {
-      const res = await ApiService.get<IUserResponse>(AuthEndpointEnum.Profile);
+      const res = await ApiService.get<ISuccessResponse<IUserResponse>>(AuthEndpointEnum.Profile);
       return res.data;
     } catch (error) {
       return Promise.reject(error);
@@ -38,7 +38,7 @@ export const authService = {
 
   logout: async () => {
     try {
-      const res = await ApiService.post(AuthEndpointEnum.Logout);
+      const res = await ApiService.get(AuthEndpointEnum.Logout);
       if (res) {
         authService.isLogged = false;
         authService.removeToken();
@@ -67,7 +67,7 @@ export const authService = {
       const res = await ApiService.post<ITokenResponse>(AuthEndpointEnum.RefreshToken, {
         refreshToken: authService.getRefreshToken()
       });
-      authService.setToken(res.data);
+      authService.setAccessToken(res.data);
       return res.data;
     } catch (error) {
       authService.isLogged = false;
@@ -75,10 +75,14 @@ export const authService = {
     }
   },
 
-  setToken: (data: ITokenResponse) => {
-    CookieUtils.set(StorageEnum.CookieAccessToken, data.accessToken, new Date(data.accessExpiredAt * 1000));
-    CookieUtils.set(StorageEnum.CookieRefreshToken, data.refreshToken, new Date(data.refreshExpiredAt * 1000));
+  setAccessToken: (data: ITokenResponse) => {
+    CookieUtils.set(StorageEnum.CookieAccessToken, data.access_token, new Date(data.expire));
   },
+
+  // setToken: (data: ITokenResponse) => {
+  //   CookieUtils.set(StorageEnum.CookieAccessToken, data.accessToken, new Date(data.accessExpiredAt * 1000));
+  //   CookieUtils.set(StorageEnum.CookieRefreshToken, data.refreshToken, new Date(data.refreshExpiredAt * 1000));
+  // },
 
   getAccessToken: (): string => {
     return CookieUtils.get(StorageEnum.CookieAccessToken);
