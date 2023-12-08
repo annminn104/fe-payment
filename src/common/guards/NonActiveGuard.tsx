@@ -16,7 +16,7 @@ const NonActiveGuard: React.FC<INonActiveGuardProps> = ({ component }) => {
 
   const { mutate: onProfileMutate, isLoading } = useMutation(() => authService.profile(), {
     onSuccess: (res) => {
-      dispatch(setProfile(res.data));
+      dispatch(setProfile(res));
       navigate(`/`);
     }
   });
