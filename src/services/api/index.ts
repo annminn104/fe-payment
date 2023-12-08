@@ -2,7 +2,7 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import { RequestInterceptorReject, RequestInterceptorResolve } from './request.interceptor';
 import { ResponseInterceptorFulfilled } from './response.interceptor';
-import { ContentTypeEnum, HttpStatusCodeEnum } from '@/common/enums';
+import { ContentTypeEnum, HttpStatusCodeEnum, UserEndPointEnum } from '@/common/enums';
 import { environments } from '@/common/environments';
 import { AxiosUtils } from '@/common/utils';
 import { IErrorResponse, ITokenResponse } from '@/common/interfaces';

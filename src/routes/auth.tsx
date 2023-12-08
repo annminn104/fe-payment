@@ -1,23 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import NonActiveGuard from '@/common/guards/NonActiveGuard';
-import React, { Suspense } from 'react';
+import React, { ElementType, Suspense } from 'react';
 import { Route } from 'react-router-dom';
 
-const LoginPage = React.lazy(() => import('@/pages/login'));
+const SuspenseLoadable = (Component: ElementType) => (props: any) => (
+  <Suspense>
+    <Component {...props} />
+  </Suspense>
+);
 
-const AuthRoutes = [
-  <Route
-    key='Auth Login'
-    path='/auth/login'
-    element={
-      <NonActiveGuard
-        component={
-          <Suspense>
-            <LoginPage />
-          </Suspense>
-        }
-      />
-    }
-  ></Route>
-];
+const LoginPage = SuspenseLoadable(React.lazy(() => import('@/pages/login')));
+
+const AuthRoutes = [<Route key='Auth Login' path='/auth/login' element={<NonActiveGuard component={<LoginPage />} />}></Route>];
 
 export default AuthRoutes;

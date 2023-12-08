@@ -2,16 +2,19 @@ import { authService } from '@/services/auth';
 import { Box, Button, Divider, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, Grid } from '@mui/material';
 import { useMutation } from '@tanstack/react-query';
 import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { FiAlignJustify, FiChevronLeft, FiList, FiCreditCard } from 'react-icons/fi';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { FiAlignJustify, FiChevronLeft, FiList, FiCreditCard, FiUser, FiDatabase } from 'react-icons/fi';
 import * as S from './styles';
+import { useAppSelector } from '@/hooks/useStore';
 
 interface IDashboardLayoutProps {
   children?: React.ReactNode;
 }
 
 const DashboardLayout: React.FC<IDashboardLayoutProps> = ({ children }) => {
+  const { profile } = useAppSelector((state) => state.auth);
   const [open, setOpen] = React.useState(true);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -56,18 +59,35 @@ const DashboardLayout: React.FC<IDashboardLayoutProps> = ({ children }) => {
         </Toolbar>
         <Divider />
         <List component='nav'>
-          <ListItemButton>
+          <ListItemButton component={NavLink} to='/'>
             <ListItemIcon sx={{ minWidth: '40px' }}>
               <FiList />
             </ListItemIcon>
             <ListItemText primary='History' />
           </ListItemButton>
-          <ListItemButton>
+          <ListItemButton component={NavLink} to='/payment'>
             <ListItemIcon sx={{ minWidth: '40px' }}>
               <FiCreditCard />
             </ListItemIcon>
             <ListItemText primary='Transfer money' />
           </ListItemButton>
+
+          {profile?.isAdmin && (
+            <>
+              <ListItemButton component={NavLink} to='/user-management'>
+                <ListItemIcon sx={{ minWidth: '40px' }}>
+                  <FiUser />
+                </ListItemIcon>
+                <ListItemText primary='Users' />
+              </ListItemButton>
+              <ListItemButton component={NavLink} to='/product-management'>
+                <ListItemIcon sx={{ minWidth: '40px' }}>
+                  <FiDatabase />
+                </ListItemIcon>
+                <ListItemText primary='Products' />
+              </ListItemButton>
+            </>
+          )}
         </List>
       </S.Drawer>
       <Box

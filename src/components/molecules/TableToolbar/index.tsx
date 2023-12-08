@@ -1,13 +1,14 @@
 import { alpha, Toolbar, Typography, FormControlLabel, Switch, Tooltip, IconButton } from '@mui/material';
 import { FiTrash2, FiFilter } from 'react-icons/fi';
 
-interface IPaymentHistoryTableToolbarProps {
+interface ITableToolbarProps {
+  title: string;
   numSelected: number;
   isDense: boolean;
   onDense: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const PaymentHistoryTableToolbar: React.FC<IPaymentHistoryTableToolbarProps> = ({ numSelected, isDense, onDense }) => {
+const TableToolbar: React.FC<ITableToolbarProps> = ({ title, numSelected, isDense, onDense }) => {
   return (
     <Toolbar
       sx={{
@@ -24,7 +25,7 @@ const PaymentHistoryTableToolbar: React.FC<IPaymentHistoryTableToolbarProps> = (
         </Typography>
       ) : (
         <Typography sx={{ flex: '1 1 100%' }} variant='h6' id='tableTitle' component='div'>
-          Payment history
+          {title}
         </Typography>
       )}
       <FormControlLabel control={<Switch checked={isDense} onChange={onDense} />} label='Dense padding' sx={{ width: '200px' }} />
@@ -45,4 +46,4 @@ const PaymentHistoryTableToolbar: React.FC<IPaymentHistoryTableToolbarProps> = (
   );
 };
 
-export default PaymentHistoryTableToolbar;
+export default TableToolbar;

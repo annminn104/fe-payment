@@ -1,5 +1,5 @@
 import { StorageEnum, AuthEndpointEnum } from '@/common/enums';
-import { IAuthLoginRequest, ISuccessResponse, ITokenResponse, IUserResponse } from '@/common/interfaces';
+import { IAuthLoginRequest, ITokenResponse, IUserResponse } from '@/common/interfaces';
 import { CookieUtils } from '@/common/utils';
 import { AxiosPromise } from 'axios';
 import ApiService from '../api';
@@ -27,9 +27,9 @@ export const authService = {
     return res.data;
   },
 
-  profile: async (): Promise<ISuccessResponse<IUserResponse>> => {
+  profile: async (): Promise<IUserResponse> => {
     try {
-      const res = await ApiService.get<ISuccessResponse<IUserResponse>>(AuthEndpointEnum.Profile);
+      const res = await ApiService.get<IUserResponse>(AuthEndpointEnum.Profile);
       return res.data;
     } catch (error) {
       return Promise.reject(error);
