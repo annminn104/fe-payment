@@ -1,21 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import { Box, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, Checkbox } from '@mui/material';
-import { PaymentHistoryMockRows, IDataMock, PaymentHistoryMockHeadCell } from '@/common/mocks';
+import { PaymentHistoryMockHeadCell } from '@/common/mocks';
 import { TableHelpers } from '@/common/helpers';
 import { OrderType } from '@/common/interfaces';
 import PaymentHistoryTableHead from '@/components/molecules/PaymentHistoryTableHead';
 import TableToolbar from '@/components/molecules/TableToolbar';
+import { IPaymentHistory, IPaymentHistoryListTableData } from '@/common/interfaces/payment';
+import { TimeUtils } from '@/common/utils';
 
-const PaymentHistoryTable = () => {
+interface IPaymentHistoryTableProps {
+  data: IPaymentHistory;
+}
+
+const PaymentHistoryTable: React.FC<IPaymentHistoryTableProps> = ({ data }) => {
   const [order, setOrder] = React.useState<OrderType>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof IDataMock>('id');
-  const [selected, setSelected] = React.useState<readonly number[]>([]);
+  const [orderBy, setOrderBy] = React.useState<keyof IPaymentHistoryListTableData>('id');
+  const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof IDataMock) => {
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof IPaymentHistoryListTableData) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -23,16 +29,16 @@ const PaymentHistoryTable = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = PaymentHistoryMockRows.map((n) => n.id);
+      const newSelected = data.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+  const handleClick = (event: React.MouseEvent<unknown>, id: string) => {
     const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
+    let newSelected: readonly string[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
@@ -59,16 +65,12 @@ const PaymentHistoryTable = () => {
     setDense(event.target.checked);
   };
 
-  const isSelected = (id: number) => selected.indexOf(id) !== -1;
+  const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - PaymentHistoryMockRows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
   const visibleRows = React.useMemo(
-    () =>
-      TableHelpers.stableSort(PaymentHistoryMockRows, TableHelpers.getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
+    () => TableHelpers.stableSort(data, TableHelpers.getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [order, orderBy, page, rowsPerPage]
   );
 
@@ -84,7 +86,7 @@ const PaymentHistoryTable = () => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={PaymentHistoryMockRows.length}
+              rowCount={data.length}
               headCells={PaymentHistoryMockHeadCell}
             />
             <TableBody>
@@ -109,10 +111,10 @@ const PaymentHistoryTable = () => {
                     <TableCell component='th' id={labelId} scope='row' padding='none'>
                       {row.fullName}
                     </TableCell>
-                    <TableCell align='right'>{row.username}</TableCell>
-                    <TableCell align='right'>{row.money}</TableCell>
-                    <TableCell align='right'>{row.createAt}</TableCell>
-                    <TableCell align='right'>{row.protein}</TableCell>
+                    <TableCell align='right'>{row.user[0].username}</TableCell>
+                    <TableCell align='right'>{row.amount}</TableCell>
+                    <TableCell align='right'>{TimeUtils.toDateTime(row.createdAt)}</TableCell>
+                    <TableCell align='right'>{row.status ? 'Success' : 'Fail'}</TableCell>
                   </TableRow>
                 );
               })}
@@ -127,7 +129,7 @@ const PaymentHistoryTable = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
-          count={PaymentHistoryMockRows.length}
+          count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

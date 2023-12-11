@@ -12,7 +12,7 @@ export class ApiService {
   private refreshTokenRequest: Promise<ITokenResponse> | null;
 
   private baseHeader = {
-    baseURL: environments.ServerUri,
+    baseURL: environments.base.serverUri,
     headers: { 'Content-Type': ContentTypeEnum.Json }
   };
 

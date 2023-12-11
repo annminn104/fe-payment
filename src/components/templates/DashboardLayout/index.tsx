@@ -65,7 +65,7 @@ const DashboardLayout: React.FC<IDashboardLayoutProps> = ({ children }) => {
             </ListItemIcon>
             <ListItemText primary='History' />
           </ListItemButton>
-          <ListItemButton component={NavLink} to='/payment'>
+          <ListItemButton component={NavLink} to='/products'>
             <ListItemIcon sx={{ minWidth: '40px' }}>
               <FiCreditCard />
             </ListItemIcon>

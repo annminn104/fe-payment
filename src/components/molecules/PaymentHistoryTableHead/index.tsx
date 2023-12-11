@@ -1,18 +1,18 @@
 import { OrderType } from '@/common/interfaces';
-import { IDataMock } from '@/common/mocks';
+import { IPaymentHistoryListTableData } from '@/common/interfaces/payment';
 import { Checkbox, TableCell, TableHead, TableRow, TableSortLabel, Box } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 
 export interface IHeadCell {
   disablePadding: boolean;
-  id: keyof IDataMock;
+  id: keyof IPaymentHistoryListTableData;
   label: string;
   numeric: boolean;
 }
 
 interface IPaymentHistoryTableHeadProps {
   numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof IDataMock) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof IPaymentHistoryListTableData) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: OrderType;
   orderBy: string;
@@ -29,7 +29,7 @@ const PaymentHistoryTableHead: React.FC<IPaymentHistoryTableHeadProps> = ({
   rowCount,
   headCells
 }) => {
-  const createSortHandler = (property: keyof IDataMock) => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: keyof IPaymentHistoryListTableData) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
 
