@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
-import { Box, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, Checkbox } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, Checkbox, Typography } from '@mui/material';
 import { PaymentHistoryMockHeadCell } from '@/common/mocks';
 import { TableHelpers } from '@/common/helpers';
 import { OrderType } from '@/common/interfaces';
@@ -112,10 +112,12 @@ const PaymentHistoryTable: React.FC<IPaymentHistoryTableProps> = ({ data }) => {
                     <TableCell component='th' id={labelId} scope='row' padding='none'>
                       {row.fullName}
                     </TableCell>
-                    <TableCell align='right'>{row.user[0].username}</TableCell>
+                    <TableCell align='right'>{row?.user[0]?.username}</TableCell>
                     <TableCell align='right'>{NumberUtils.formatMoney(row.amount, '$')}</TableCell>
                     <TableCell align='right'>{TimeUtils.toDateTime(row.createdAt)}</TableCell>
-                    <TableCell align='right'>{row.status ? 'Success' : 'Fail'}</TableCell>
+                    <TableCell align='right'>
+                      {row.status ? <Typography color='success.main'>Success</Typography> : <Typography color='error.main'>InCompleted</Typography>}
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -128,6 +130,7 @@ const PaymentHistoryTable: React.FC<IPaymentHistoryTableProps> = ({ data }) => {
           </Table>
         </TableContainer>
         <TablePagination
+          labelRowsPerPage='Sizes'
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
           count={data.length}

@@ -136,6 +136,7 @@ const UserManagementTable: React.FC<IUserManagementTableProps> = ({ data, onCrea
           </Table>
         </TableContainer>
         <TablePagination
+          labelRowsPerPage='Sizes'
           rowsPerPageOptions={[5, 10, 25]}
           component='div'
           count={data.length}

@@ -38,9 +38,9 @@ const PaymentCheckoutForm = () => {
     <form id='payment-form' onSubmit={handleSubmit}>
       <PaymentElement id='payment-element' />
       <S.SubmitBtn disabled={isProcessing || !stripe || !elements} id='submit'>
-        <span id='button-text'>{isProcessing ? 'Processing ... ' : 'Pay now'}</span>
-        {/* <Button fullWidth variant='contained' component='div'>
-        </Button> */}
+        <Button fullWidth variant='contained' component='div' id='button-text'>
+          <span>{isProcessing ? 'Processing ... ' : 'Pay now'}</span>
+        </Button>
       </S.SubmitBtn>
       {message && <div id='payment-message'>{message}</div>}
     </form>

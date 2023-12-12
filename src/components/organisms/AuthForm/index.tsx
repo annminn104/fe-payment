@@ -2,14 +2,15 @@ import { IAuthLoginRequest } from '@/common/interfaces';
 import { UserSchema } from '@/common/schemas';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Grid, Link, TextField, Typography, FormControlLabel, Checkbox, Button } from '@mui/material';
+import { Box, Grid, Link, TextField, Typography, FormControlLabel, Checkbox, Button, Alert } from '@mui/material';
 import { Logo } from '@/components/atoms/Logo';
 
 interface IAuthFormProp {
   onLogin: (values: IAuthLoginRequest) => void;
+  errorMsg: string;
 }
 
-const AuthForm: React.FC<IAuthFormProp> = ({ onLogin }) => {
+const AuthForm: React.FC<IAuthFormProp> = ({ onLogin, errorMsg }) => {
   const validationSchema = UserSchema.pick(['username', 'password']);
 
   const { handleSubmit, control } = useForm({
@@ -41,6 +42,11 @@ const AuthForm: React.FC<IAuthFormProp> = ({ onLogin }) => {
           <Typography component='h1' variant='h3'>
             Login
           </Typography>
+          {errorMsg && (
+            <Alert security='error' color='error'>
+              {errorMsg}
+            </Alert>
+          )}
           <Box component='form' noValidate onSubmit={handleSubmit(handleSubmitForm)} sx={{ mt: 1 }}>
             <Controller
               name='username'

@@ -47,7 +47,9 @@ const PaymentPage = () => {
     <React.Fragment>
       {clientSecret && stripePromise ? (
         <S.TransferForm>
-          <Alert severity='info'>Transfer amount of {NumberUtils.formatMoney(inputValue, '$')}</Alert>
+          <Alert severity='info' sx={{ marginBottom: '8px' }}>
+            Transfer amount of {NumberUtils.formatMoney(inputValue, '$')}
+          </Alert>
           <Elements stripe={stripePromise} options={{ clientSecret }}>
             <PaymentCheckoutForm />
           </Elements>
