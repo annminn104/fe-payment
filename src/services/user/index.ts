@@ -1,7 +1,7 @@
 import { UserEndPointEnum } from '@/common/enums';
 import ApiService from '../api';
 import { IParametersRequest } from '../types';
-import { IUserCreateRequest, IUserListResponse, IUserListingRequest } from '@/common/interfaces';
+import { IUserCreateRequest, IUserDeleteManyRequest, IUserListResponse, IUserListingRequest } from '@/common/interfaces';
 
 export const userService = {
   listing: async (data: IUserListingRequest, params: IParametersRequest): Promise<IUserListResponse> => {
@@ -11,6 +11,11 @@ export const userService = {
 
   create: async (data: IUserCreateRequest): Promise<unknown> => {
     const res = await ApiService.post<IUserListResponse>(UserEndPointEnum.Create, data);
+    return res.data;
+  },
+
+  deleteMany: async (data: IUserDeleteManyRequest): Promise<unknown> => {
+    const res = await ApiService.post<IUserDeleteManyRequest>(UserEndPointEnum.Delete, data);
     return res.data;
   }
 };

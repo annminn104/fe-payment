@@ -11,6 +11,8 @@ const SuspenseLoadable = (Component: ElementType) => (props: any) => (
 
 const LoginPage = SuspenseLoadable(React.lazy(() => import('@/pages/login')));
 
-const AuthRoutes = [<Route key='Auth Login' path='/auth/login' element={<NonActiveGuard component={<LoginPage />} />}></Route>];
+const AuthRoutes = [
+  <Route key='Auth Login' path='/auth/login' handle={{ crumb: 'Auth' }} element={<NonActiveGuard component={<LoginPage />} />}></Route>
+];
 
 export default AuthRoutes;

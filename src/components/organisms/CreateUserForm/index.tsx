@@ -1,4 +1,4 @@
-import { IUserCreateRequest } from '@/common/interfaces';
+import { IUserCreateRequest, IUserFormCreateRequest } from '@/common/interfaces';
 import { UserSchema } from '@/common/schemas';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, TextField } from '@mui/material';
@@ -11,16 +11,20 @@ interface ICreateUserFormProps {
 }
 
 const CreateUserForm: React.FC<ICreateUserFormProps> = ({ onCreate }) => {
-  const validationSchema = UserSchema.pick(['username', 'password', 'fullName']);
+  const validationSchema = UserSchema.pick(['email', 'password', 'fullName']);
   const [open, setOpen] = React.useState(false);
 
-  const { handleSubmit, control } = useForm({
+  const { handleSubmit, reset, control } = useForm({
     resolver: yupResolver(validationSchema)
   });
 
-  const handleSubmitForm = (data: IUserCreateRequest) => {
-    onCreate(data);
-    setOpen(false);
+  const handleSubmitForm = (data: IUserFormCreateRequest) => {
+    const rawData: IUserCreateRequest = {
+      ...data,
+      username: data.email
+    };
+    onCreate(rawData);
+    handleClose();
   };
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,10 +32,11 @@ const CreateUserForm: React.FC<ICreateUserFormProps> = ({ onCreate }) => {
 
   const handleClose = () => {
     setOpen(false);
+    reset();
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Button variant='outlined' onClick={handleClickOpen} startIcon={<FiUserPlus size='16' />}>
         Add new user
       </Button>
@@ -76,7 +81,7 @@ const CreateUserForm: React.FC<ICreateUserFormProps> = ({ onCreate }) => {
             )}
           />
           <Controller
-            name='username'
+            name='email'
             control={control}
             defaultValue=''
             render={({ field, fieldState: { error } }) => (
@@ -84,10 +89,10 @@ const CreateUserForm: React.FC<ICreateUserFormProps> = ({ onCreate }) => {
                 margin='normal'
                 required
                 fullWidth
-                id='username'
-                label='Username'
-                name='username'
-                autoComplete='username'
+                id='email'
+                label='Email'
+                name='email'
+                autoComplete='email'
                 autoFocus
                 value={field.value}
                 onChange={field.onChange}
@@ -127,7 +132,7 @@ const CreateUserForm: React.FC<ICreateUserFormProps> = ({ onCreate }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 };
 

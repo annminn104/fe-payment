@@ -18,14 +18,24 @@ const UserManagementPage = SuspenseLoadable(React.lazy(() => import('@/pages/use
 const ProductManagementPage = SuspenseLoadable(React.lazy(() => import('@/pages/product-management')));
 
 const DashboardRoutes = [
-  <Route key='Dashboard' path='/' element={<CanActiveGuard component={<DashboardLayout />} />}>
+  <Route key='Dashboard' path='/' handle={{ crumb: 'Dashboard' }} element={<CanActiveGuard component={<DashboardLayout />} />}>
     {/* User route */}
-    <Route key='Payment history' path='' element={<PaymentHistoryPage />} />
-    <Route key='Payment' path='payment' element={<PaymentPage />} />
-    <Route key='Products' path='products' element={<ProductsPage />} />
+    <Route key='Payment history' handle={{ crumb: 'Payment history' }} path='' element={<PaymentHistoryPage />} />
+    <Route key='Payment' handle={{ crumb: 'Payment: Transfer money' }} path='payment' element={<PaymentPage />} />
+    <Route key='Products' handle={{ crumb: 'Products' }} path='products' element={<ProductsPage />} />
     {/* Admin route */}
-    <Route key='User management' path='user-management' element={<AdminActiveGuard component={<UserManagementPage />} />} />
-    <Route key='Product management' path='product-management' element={<AdminActiveGuard component={<ProductManagementPage />} />} />
+    <Route
+      key='User management'
+      path='user-management'
+      handle={{ crumb: 'User management' }}
+      element={<AdminActiveGuard component={<UserManagementPage />} />}
+    />
+    <Route
+      key='Product management'
+      path='product-management'
+      handle={{ crumb: 'Product management' }}
+      element={<AdminActiveGuard component={<ProductManagementPage />} />}
+    />
   </Route>
 ];
 

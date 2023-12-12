@@ -32,16 +32,27 @@ export interface IUserListItem {
   fullName: string;
   username: string;
   id: string;
+  createdAt: Date | string;
 }
 
 export type IUserListResponse = IDataPaginationResponse<IUserListItem>;
 
 export type IUserList = IUserListItem[];
 
-export type IUserListTableData = Pick<IUserListItem, 'fullName' | 'username' | 'id'>;
+export type IUserListTableData = Pick<IUserListItem, 'fullName' | 'username' | 'id' | 'createdAt'>;
 
 export interface IUserCreateRequest {
   fullName: string;
   username: string;
   password: string;
+}
+
+export interface IUserFormCreateRequest {
+  fullName: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserDeleteManyRequest {
+  ids: string[];
 }

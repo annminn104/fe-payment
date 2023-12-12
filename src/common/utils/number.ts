@@ -9,7 +9,7 @@ export class NumberUtils {
    * formatted with commas as thousands separators.
    */
   static formatMoney(number: number, currency = ''): string {
-    return Math.round(number).toLocaleString('en-GB') + currency;
+    return currency + Math.round(number).toLocaleString('en-GB');
   }
 
   /* The `convertQueryParam` function is a static method of the `NumberUtils` class. It takes a parameter

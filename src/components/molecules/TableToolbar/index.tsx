@@ -6,9 +6,10 @@ interface ITableToolbarProps {
   numSelected: number;
   isDense: boolean;
   onDense: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onDelete?: () => void;
 }
 
-const TableToolbar: React.FC<ITableToolbarProps> = ({ title, numSelected, isDense, onDense }) => {
+const TableToolbar: React.FC<ITableToolbarProps> = ({ title, numSelected, isDense, onDense, onDelete }) => {
   return (
     <Toolbar
       sx={{
@@ -31,7 +32,7 @@ const TableToolbar: React.FC<ITableToolbarProps> = ({ title, numSelected, isDens
       <FormControlLabel control={<Switch checked={isDense} onChange={onDense} />} label='Dense padding' sx={{ width: '200px' }} />
       {numSelected > 0 ? (
         <Tooltip title='Delete'>
-          <IconButton>
+          <IconButton onClick={onDelete}>
             <FiTrash2 />
           </IconButton>
         </Tooltip>

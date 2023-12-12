@@ -1,20 +1,22 @@
 import { TableHelpers } from '@/common/helpers';
-import { IUserCreateRequest, IUserList, IUserListTableData, OrderType } from '@/common/interfaces';
+import { IUserCreateRequest, IUserDeleteManyRequest, IUserList, IUserListTableData, OrderType } from '@/common/interfaces';
 import { UserMockHeadCell } from '@/common/mocks/user';
 import TableToolbar from '@/components/molecules/TableToolbar';
 import UserTableHead from '@/components/molecules/UserTableHead';
 import { Box, Paper, Table, TableBody, TableContainer, TableRow, TableCell, Checkbox, TablePagination } from '@mui/material';
 import React from 'react';
 import CreateUserForm from '../CreateUserForm';
+import { TimeUtils } from '@/common/utils';
 
 interface IUserManagementTableProps {
   data: IUserList;
   onCreate: (data: IUserCreateRequest) => void;
+  onDelete: (data: IUserDeleteManyRequest) => void;
 }
-const UserManagementTable: React.FC<IUserManagementTableProps> = ({ data, onCreate }) => {
-  const [order, setOrder] = React.useState<OrderType>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof IUserListTableData>('id');
-  const [selected, setSelected] = React.useState<readonly string[]>([]);
+const UserManagementTable: React.FC<IUserManagementTableProps> = ({ data, onCreate, onDelete }) => {
+  const [order, setOrder] = React.useState<OrderType>('desc');
+  const [orderBy, setOrderBy] = React.useState<keyof IUserListTableData>('createdAt');
+  const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -36,7 +38,7 @@ const UserManagementTable: React.FC<IUserManagementTableProps> = ({ data, onCrea
 
   const handleClick = (event: React.MouseEvent<unknown>, id: string) => {
     const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly string[] = [];
+    let newSelected: string[] = [];
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, id);
@@ -67,16 +69,24 @@ const UserManagementTable: React.FC<IUserManagementTableProps> = ({ data, onCrea
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - data.length) : 0;
 
-  const visibleRows = React.useMemo(
-    () => TableHelpers.stableSort(data, TableHelpers.getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [order, orderBy, page, rowsPerPage]
+  const visibleRows = TableHelpers.stableSort(data, TableHelpers.getComparator(order, orderBy)).slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
   );
+
+  const handleDelete = () => {
+    if (selected.length > 0) {
+      onDelete({ ids: selected });
+      setSelected([]);
+      setPage(0);
+    }
+  };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <CreateUserForm onCreate={onCreate} />
-        <TableToolbar title='User management' numSelected={selected.length} isDense={dense} onDense={handleChangeDense} />
+        <TableToolbar title='User management' numSelected={selected.length} isDense={dense} onDense={handleChangeDense} onDelete={handleDelete} />
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby='tableTitle' size={dense ? 'small' : 'medium'}>
             <UserTableHead
@@ -88,6 +98,7 @@ const UserManagementTable: React.FC<IUserManagementTableProps> = ({ data, onCrea
               rowCount={data.length}
               headCells={UserMockHeadCell}
             />
+
             <TableBody>
               {visibleRows.map((row, index) => {
                 const isItemSelected = isSelected(row.id);
@@ -108,9 +119,10 @@ const UserManagementTable: React.FC<IUserManagementTableProps> = ({ data, onCrea
                       <Checkbox color='primary' checked={isItemSelected} inputProps={{ 'aria-labelledby': labelId }} />
                     </TableCell>
                     <TableCell component='th' id={labelId} scope='row' padding='none'>
-                      {row.fullName}
+                      {row.username}
                     </TableCell>
-                    <TableCell align='right'>{row.username}</TableCell>
+                    <TableCell align='right'>{row.fullName}</TableCell>
+                    <TableCell align='right'>{TimeUtils.toDateTime(row.createdAt)}</TableCell>
                     <TableCell align='right'>{row.id}</TableCell>
                   </TableRow>
                 );

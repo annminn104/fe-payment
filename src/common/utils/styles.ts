@@ -19,4 +19,12 @@ export class StylesUtils {
       }
     };
   }
+
+  static adjustFlex() {
+    return {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    };
+  }
 }

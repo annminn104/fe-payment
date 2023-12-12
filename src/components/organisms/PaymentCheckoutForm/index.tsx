@@ -1,5 +1,7 @@
+import { Button } from '@mui/material';
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useState } from 'react';
+import * as S from './styles';
 
 const PaymentCheckoutForm = () => {
   const [message, setMessage] = useState<string | null>(null);
@@ -34,15 +36,15 @@ const PaymentCheckoutForm = () => {
   };
 
   return (
-    <div>
-      <form id='payment-form' onSubmit={handleSubmit}>
-        <PaymentElement id='payment-element' />
-        <button disabled={isProcessing || !stripe || !elements} id='submit'>
+    <form id='payment-form' onSubmit={handleSubmit}>
+      <PaymentElement id='payment-element' />
+      <S.SubmitBtn disabled={isProcessing || !stripe || !elements} id='submit'>
+        <Button fullWidth variant='contained' component='div'>
           <span id='button-text'>{isProcessing ? 'Processing ... ' : 'Pay now'}</span>
-        </button>
-        {message && <div id='payment-message'>{message}</div>}
-      </form>
-    </div>
+        </Button>
+      </S.SubmitBtn>
+      {message && <div id='payment-message'>{message}</div>}
+    </form>
   );
 };
 

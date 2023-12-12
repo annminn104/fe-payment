@@ -5,5 +5,6 @@ export enum UserRoleEnum {
 
 export enum UserEndPointEnum {
   Listing = '/user/listing',
-  Create = '/user/create'
+  Create = '/user/create',
+  Delete = '/user/delete'
 }

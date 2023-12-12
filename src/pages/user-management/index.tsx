@@ -1,5 +1,5 @@
 import { QueryKeyConstants } from '@/common/constants';
-import { IUserCreateRequest } from '@/common/interfaces';
+import { IUserCreateRequest, IUserDeleteManyRequest } from '@/common/interfaces';
 import UserManagementTable from '@/components/organisms/UserManagementTable';
 import userService from '@/services/user';
 import { CircularProgress } from '@mui/material';
@@ -21,7 +21,21 @@ const UserManagementPage = () => {
     }
   });
 
-  return <>{!isLoading && userListing ? <UserManagementTable data={userListing.results} onCreate={createUserMutate} /> : <CircularProgress />}</>;
+  const { mutate: deleteUserMutate } = useMutation((data: IUserDeleteManyRequest) => userService.deleteMany(data), {
+    onSuccess: () => {
+      refetch();
+    }
+  });
+
+  return (
+    <>
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <UserManagementTable data={userListing ? userListing.results : []} onCreate={createUserMutate} onDelete={deleteUserMutate} />
+      )}
+    </>
+  );
 };
 
 export default UserManagementPage;

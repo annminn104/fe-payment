@@ -9,12 +9,12 @@ export const PaymentHistoryMockHeadCell: IHeadCell[] = [
 ];
 
 export const PaymentButtonMock = [
-  { label: '50$', value: 5000 },
-  { label: '100$', value: 10000 },
-  { label: '200$', value: 20000 },
-  { label: '500$', value: 50000 },
-  { label: '1000$', value: 100000 },
-  { label: '2000$', value: 200000 },
-  { label: '5000$', value: 500000 },
-  { label: '10000$', value: 1000000 }
+  { label: '$50', value: 50 },
+  { label: '$100', value: 100 },
+  { label: '$200', value: 200 },
+  { label: '$500', value: 500 },
+  { label: '$1.000', value: 1000 },
+  { label: '$2.000', value: 2000 },
+  { label: '$5.000', value: 5000 },
+  { label: '$10.000', value: 10000 }
 ];
