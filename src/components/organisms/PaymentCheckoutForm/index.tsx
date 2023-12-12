@@ -6,7 +6,6 @@ import * as S from './styles';
 const PaymentCheckoutForm = () => {
   const [message, setMessage] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
-
   const elements = useElements();
   const stripe = useStripe();
 
@@ -39,9 +38,9 @@ const PaymentCheckoutForm = () => {
     <form id='payment-form' onSubmit={handleSubmit}>
       <PaymentElement id='payment-element' />
       <S.SubmitBtn disabled={isProcessing || !stripe || !elements} id='submit'>
-        <Button fullWidth variant='contained' component='div'>
-          <span id='button-text'>{isProcessing ? 'Processing ... ' : 'Pay now'}</span>
-        </Button>
+        <span id='button-text'>{isProcessing ? 'Processing ... ' : 'Pay now'}</span>
+        {/* <Button fullWidth variant='contained' component='div'>
+        </Button> */}
       </S.SubmitBtn>
       {message && <div id='payment-message'>{message}</div>}
     </form>
